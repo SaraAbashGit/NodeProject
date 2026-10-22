@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <meta name="description" content="">
+        <meta name="author" content="Tooplate">
+
+        <title>Moso Interior - Product Listing Page</title>
+
+        <!-- CSS FILES -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+        <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@100;300;400;600;700&display=swap" rel="stylesheet">
+
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+
+        <link href="css/bootstrap-icons.css" rel="stylesheet">
+
+        <link href="css/owl.carousel.min.css" rel="stylesheet">
+
+        <link href="css/tooplate-moso-interior.css" rel="stylesheet">
+<!--
+
+Tooplate 2133 Moso Interior
+
+https://www.tooplate.com/view/2133-moso-interior
+
+Bootstrap 5 HTML CSS Template
+
+-->
+<style>
+    #usersList, #ordersList ,#productList{
+        display: none; /* control visibility through JavaScript */
+        font-size: 0.9rem;
+        color: #d36e6e; /* Custom color */
+        margin-top: 10px;
+        width: 40%;
+        max-width: 800px;
+    }
+    #userTable, #orderTable ,#productTable{
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+    #userTable th, #userTable td, #orderTable th, #orderTable td ,#productTable td,#productTable tr{
+        border: 2px solid #ddd;
+        padding: 8px;
+        font-size: 15px;
+        font-weight: bold;
+        background-color: white;
+        opacity: 0.5; /* Apply opacity to table cells */
+    }
+    #userTable th, #orderTable th ,#productTable th{
+        background-color: #f2f2f2; /* Light gray background for headers */
+    }
+</style>
+    </head>
+    
+    <body class="shop-listing-page">
+
+        <nav class="navbar navbar-expand-lg bg-light fixed-top shadow-lg">
+            <div class="container">
+                <a class="navbar-brand" href="index.html">Moso <span class="tooplate-red">Inter</span><span class="tooplate-green">ior</span></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link click-scroll" href="index.html#section_1">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link click-scroll" href="index.html#section_2">About</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle click-scroll" href="index.html#section_3" id="navbarLightDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
+                            <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink">
+                                <li><a class="dropdown-item active" href="shop-listing.html">Manager</a></li>
+
+                                <li><a class="dropdown-item" href="shop-detail.html">Shop Detail</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link click-scroll" href="index.html#section_4">Reviews</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link click-scroll" href="index.html#section_5">Contact</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <main>
+            <header class="site-header d-flex justify-content-center align-items-center">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12 col-12">
+                            <h1 class="text-white">Manager</h1>
+                        </div>
+                    </div>
+                </div>
+               
+            </header>        
+            <button id="productButton" style="width: 150px;" onclick="productShow()">Product</button>
+            <button id="orderButton" style="width: 150px;" onclick="orderShow()">Order</button>
+            <button id="membersButton" style="width: 150px;" onclick="membersShow()">Members</button>
+
+            <div id="usersList" class="hidden mt-5" >
+                <h2 class="listH1">Users List</h2>
+                <table id="userTable">
+                    <thead>
+                        <tr>
+                            <th>FullName</th>
+                            <th>Password</th>
+                            <th>Mail</th>
+                            <th>Phone</th>
+                            <th>Adress</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Rows will be added here dynamically -->
+                    </tbody>
+                </table>
+            </div>
+            <div id="ordersList" class="hidden">
+                <h2 class="listH1">Order List</h2>
+                <table id="orderTable">
+                    <thead>
+                        <tr>
+                            <th>OrderId</th>
+                            <th>UserId</th>
+                            <th>qty</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>ProductsId</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Rows will be added here dynamically -->
+                    </tbody>
+                </table>
+            </div>
+            <div id="productList" class="hidden">
+                <h2 class="listH1">Products List</h2> 
+                <table id="productTable">
+                    <thead>
+                        <tr>
+                            <th>productID</th>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Category</th>
+                            <th>Stok</th>  
+                            <th>Delete</th>  
+                            <th>update stock</th>  
+                            <th>update price</th>                                           
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Rows will be added here dynamically -->
+                    </tbody>
+                </table>
+            </div>
+            <script>
+                  function productShow()
+                {
+                   const productList=document.getElementById('productList')
+                   productList.style.display='block';
+                   fetchProducts();
+                }
+                function orderShow()
+                {                  
+                    const orderList = document.getElementById('ordersList');
+                    orderList.style.display = 'block'; 
+                    fetchOrders();                    
+                }
+                function membersShow()
+                {                  
+                    const usersList = document.getElementById('usersList');
+                    usersList.style.display = 'block'; 
+                    fetchUsers();                    
+                }
+                async function fetchUsers() {
+                try {
+                    
+                    const response = await fetch('http://localhost:3284/users', {
+                        method: 'GET',
+                        mode: 'cors',
+                        credentials: 'include' 
+                    });
+                   
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+
+                    const text = await response.text();
+                     // See raw response
+                    const data = JSON.parse(text); 
+                    
+                    populateUserTable(data); 
+                    
+                } 
+                catch (error) {
+                    console.error('Error fetching users:', error);
+                }
+            }
+            async function fetchOrders() {
+                try {
+                    
+                    const response = await fetch('http://localhost:3284/order', {
+                        method: 'GET',
+                        mode: 'cors',
+                        credentials: 'include' 
+                    });
+                   
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+
+                    const text = await response.text();
+                      // See raw response
+                    const data = JSON.parse(text); 
+                    
+                    populateOrderTable(data); 
+                    
+                } 
+                catch (error) {
+                    console.error('Error fetching users:', error);
+                }
+            }
+            function populateUserTable(data) {
+            
+        
+            const tableBody = document.querySelector("#userTable tbody");
+            tableBody.innerHTML = ''; 
+
+            data.forEach(user => {
+                const row = document.createElement('tr');
+
+                row.innerHTML = `
+                <td>${user.fullname}</td>
+                <td>${user.password}</td>
+                <td>${user.email}</td>
+                <td>${user.phone}</td>
+                <td>${user.address}</td>
+                `;
+
+                tableBody.appendChild(row);
+            });
+            }
+            function populateOrderTable(data) {
+            
+
+            const tableBody = document.querySelector("#orderTable tbody");
+            tableBody.innerHTML = ''; 
+
+            data.forEach(order => {
+                const row = document.createElement('tr');
+
+                row.innerHTML = `
+                <td>${order.orderId}</td>
+                <td>${order.email}</td>
+                <td>${order.quantity}</td>
+                <td>${order.orderDate}</td>
+                <td>${order.productsId}</td>
+                <td>${order.status}</td>
+                `;
+
+                tableBody.appendChild(row);
+            });
+            }
+          
+
+               async function fetchProducts() {
+                try {
+                    
+                    const response = await fetch('http://localhost:3284/product', {
+                        method: 'GET',
+                        mode: 'cors',
+                        credentials: 'include' 
+                    });
+                   
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+
+                    const text = await response.text();
+                     // See raw response
+                    const data = JSON.parse(text); 
+                    
+                    populateProductTable(data); 
+                    
+                } 
+                catch (error) {
+                    console.error('Error fetching users:', error);
+                }
+            }
+            function populateProductTable(data) {
+            
+              
+            const tableBody = document.querySelector("#productTable tbody");
+            tableBody.innerHTML = ''; 
+
+            data.forEach(product => {
+                const row = document.createElement('tr');
+
+                row.innerHTML = `
+                <td>${product.productId}</td>
+                <td>${product.name}</td>
+                <td class="price-display">${product.price}</td>
+                <td>${product.category}</td>
+                <td class="stock-display">${product.stock}</td>              
+                <td><button class="btn btn-outline-danger btn-sm" onclick="deleteProduct('${product._id}', this)">🗑️ מחק</button></td>
+           
+
+            <td>
+            <input type="number" min="0" class="form-control form-control-sm"
+                    value="${product.stock}"
+                    onchange="updateProductStock('${product._id}', this)">
+            </td>
+
+                            <td>
+            <input type="number" min="0" step="0.01" class="form-control form-control-sm"
+                    value="${product.price}"
+                    onchange="updateProductPrice('${product._id}', this)">
+            </td>
+
+                `;
+
+                tableBody.appendChild(row);
+            });
+            }
+    
+              
+         function deleteProduct(id, btnElement) {
+    fetch(`http://localhost:3284/product`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ _id: id })
+    })
+    .then(res => res.json())
+    .then(() => {
+       
+        const row = btnElement.closest('tr');
+        if (row) {
+            row.remove();
+        }
+        
+    })
+    .catch(err => console.error('Error deleting product:', err));
+}
+   
+function updateProductPrice(productId, inputElement) {
+  const newPrice = parseFloat(inputElement.value);
+
+  fetch(`http://localhost:3284/product/price/${productId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ price: newPrice })
+  })
+  .then(res => res.json())
+  .then(data => {
+        console.log('Price update successful:', data);
+        const updatedProduct = data.product;
+        const row = inputElement.closest('tr'); 
+        
+        if (row && updatedProduct) {
+           
+            const priceDisplayCell = row.querySelector('.price-display');
+            
+          
+            const stockDisplayCell = row.querySelector('.stock-display'); 
+
+            if (priceDisplayCell) {
+               
+                priceDisplayCell.textContent = updatedProduct.price; 
+            }
+            if (stockDisplayCell) { 
+                stockDisplayCell.textContent = updatedProduct.stock;
+            }
+        }
+    })
+  .catch(error => {
+    console.error('Error updating price:', error);
+  });
+}
+
+
+function updateProductStock(productId, inputElement) {
+  const newStock = inputElement.value;
+
+  fetch(`http://localhost:3284/product/stock`, {
+    method: 'PUT', 
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ _id: productId, stock: Number(newStock) })
+  })
+  .then(res => res.json())
+.then(data => {
+  console.log('Updated product from server:', data);
+  const updatedProduct = data.product; 
+  const row = inputElement.closest('tr');
+  if (row) {
+    const stockDisplayCell = row.querySelector('.stock-display');
+    if (stockDisplayCell && updatedProduct) {
+      stockDisplayCell.textContent = updatedProduct.stock;
+    }
+  }
+})
+  .catch(err => {
+    console.error('Error updating stock:', err);
+  });
+}
+
+            </script>
+            
+</html>
+

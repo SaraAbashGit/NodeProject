@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>תשלום</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        
+        body {
+            font-family: Arial, "Segoe UI", sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f5f6fa;
+        }
+        .payment-container {
+            max-width: 410px;
+            margin: 50px auto;
+            background: #fff;
+            border-radius: 14px;
+            padding: 32px 28px 24px 28px;
+            box-shadow: 0 2px 14px #2221;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            letter-spacing: 1px;
+            color: green;
+        }
+        .total-sum {
+            font-size: 1.5em;
+            color: #222;
+            margin-bottom: 28px;
+            font-weight: bold;
+            text-align: center;
+        }
+        form {
+            margin: 0;
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            font-size: 1em;
+            margin-bottom: 7px;
+            font-weight: 500;
+        }
+        input[type="text"], input[type="email"], input[type="tel"] {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #d2d2d2;
+            border-radius: 7px;
+            font-size: 1em;
+            background: #fafbfc;
+            transition: box-shadow 0.2s;
+        }
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="tel"]:focus {
+            border-color: #ff7300;
+            outline: none;
+            box-shadow: 0 0 0 2px #ff730029;
+        }
+        .flex-row {
+            display: flex;
+            gap: 14px;
+        }
+        .flex-row > div {
+            flex: 1;
+        }
+        button {
+            background: linear-gradient(to right, #ff7300 80%, #ff9100 100%);
+            color: #fff;
+            padding: 14px 0;
+            border: none;
+            width: 100%;
+            font-size: 1.16em;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 14px;
+            letter-spacing: 1px;
+            transition: background 0.18s;
+        }
+        button:hover {
+            background: linear-gradient(to right, #ff9100 60%, #ff7300 100%);
+        }
+        /* לחצני אוטופיל */
+        input:-webkit-autofill {
+            -webkit-box-shadow: 0 0 0 40px #fafbfc inset;
+        }
+    </style>
+</head>
+<body>
+    <div class="payment-container">
+        <h2>טופס תשלום</h2>
+        <div class="total-sum">
+            סה"כ לתשלום: <span id="total-sum">0</span> $
+        </div>
+        <form id="payment-form" autocomplete="off">
+            <div class="input-group">
+                <label for="name">שם בעל הכרטיס</label>
+                <input type="text" id="name" required placeholder="לדוג' ישראל ישראלי">
+            </div>
+            <div class="input-group">
+                <label for="card-number">מספר כרטיס אשראי</label>
+                <input type="tel" id="card-number" inputmode="numeric" autocomplete="cc-number" pattern="\d{13,19}" maxlength="19" required placeholder="1234567890123456">
+            </div>
+            <div class="input-group flex-row">
+                <div>
+                    <label for="expiry">תוקף (MM/YY)</label>
+                    <input type="text" id="expiry" required pattern="\d{2}/\d{2}" maxlength="5" placeholder="12/29" autocomplete="cc-exp">
+                </div>
+                <div>
+                    <label for="cvv">קוד CVV</label>
+                    <input type="tel" id="cvv" required pattern="\d{3,4}" maxlength="4" autocomplete="cc-csc" placeholder="123">
+                </div>
+            </div>
+            <div class="input-group">
+                <label for="email">דואר אלקטרוני</label>
+                <input type="email" id="email" required placeholder="your@email.com">
+            </div>
+            <button type="submit">בצע תשלום</button>
+        </form>
+    </div>
+    <script>
+        
+  // עדכון סכום לתשלום
+let sum = localStorage.getItem('cartSum');
+if (!sum) sum = 0;
+sum = sum.toString().replace('$','');
+document.getElementById('total-sum').textContent = Number(sum).toLocaleString();
+
+document.getElementById('payment-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    // שליפת נתוני הסל
+    const cart = JSON.parse(localStorage.getItem('cartItems')) || [];
+    const finalPrice = localStorage.getItem('cartSum') || 0;
+
+    // שליפת פרטים מהטופס
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+        let quantity = 0;
+
+        for (const item of cart) {
+          quantity += item.qty || 1; 
+        }
+  
+        
+    // בונים אובייקט הזמנה
+    const order = {     
+        email,
+       productsId: cart.map(i => i._id),
+        finalPrice,
+        quantity,
+    };
+    try {
+        const res = await fetch('http://localhost:3284/order', {
+            method: 'POST',
+            credentials: 'include', 
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(order)
+        });
+      
+        console.log('Status:', res.status);
+        const data = await res.text(); // או res.json() אם זה JSON
+        console.log('Response:', data);
+        if (res.ok) {
+            alert("התשלום התקבל. תודה שקניתם אצלנו!");
+            localStorage.removeItem('cartSum');
+            localStorage.removeItem('cartItems');
+            window.location.href = "index.html";
+        } else {
+            alert('אירעה שגיאה בשמירת ההזמנה, נסי שוב');
+        }
+    } catch (err) {
+        alert('אירעה תקלה בתקשורת עם השרת');
+    }
+});
+
+    </script>
+</body>
+</html>
